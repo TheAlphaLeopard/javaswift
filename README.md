@@ -1,12 +1,21 @@
-# Javaswift Project
+# JavaSwift
 
-Javaswift is a new programming language that is a subset/superset of JavaScript, designed to be faster and more efficient. It maintains a similar syntax to JavaScript while using fewer characters and optimized constructs to enhance performance. Javaswift compiles down to standard JavaScript, making it easy to integrate with existing JavaScript projects.
+JavaSwift is a subset/superset of JavaScript designed to be faster and more efficient. It compiles to JavaScript and is optimized for performance.
 
 ## Features
+- Cleaner syntax
+- Faster execution
+- Compiles to JavaScript
 
-- **Faster Execution**: Javaswift is optimized for speed, allowing for quicker execution of code.
-- **Concise Syntax**: The language uses a more compact syntax, reducing the amount of code needed to achieve the same functionality.
-- **JavaScript Compatibility**: Javaswift compiles to JavaScript, ensuring compatibility with existing JavaScript environments.
+## Getting Started
+1. Clone the repository.
+2. Install dependencies.
+3. Run `.jsw` files using the interpreter.
+
+## Documentation
+- [Syntax](syntax.md)
+- [Examples](examples.md)
+- [Usage](usage.md)
 
 ## Project Structure
 
