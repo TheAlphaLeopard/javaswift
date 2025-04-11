@@ -1,3 +1,7 @@
 fn main() {
     print("Hello, JavaSwift!");
+
+    for i in 0..5 {
+        print("Count: " + i);
+    }
 }

@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "es2016", // Ensure compatibility with modern JavaScript features
     "module": "commonjs",
+    "lib": ["es2016", "dom"], // Add "es2016" for `includes` support
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
@@ -10,10 +11,10 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
-    "**/*.spec.ts"
+    "dist"
   ]
 }

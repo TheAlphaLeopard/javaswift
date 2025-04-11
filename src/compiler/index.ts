@@ -1,17 +1,15 @@
-class JavaSwiftCompiler {
+import { Syntax } from '../language/syntax';
+
+export class JavaSwiftCompiler {
     compile(source: string): string {
-        const transformed = this.transformSyntax(source);
+        const syntax = new Syntax();
+        const transformed = syntax.transform(source);
         const optimized = this.optimize(transformed);
         return optimized;
     }
 
-    optimize(code: string): string {
-        // Optimization logic here
-        return code; // Placeholder for optimized code
-    }
-
-    private transformSyntax(source: string): string {
-        // Transform Javaswift syntax to JavaScript syntax
-        return source; // Placeholder for transformed code
+    private optimize(code: string): string {
+        // Placeholder for optimization logic
+        return code;
     }
 }

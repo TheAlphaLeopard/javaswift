@@ -1,6 +1,6 @@
 export function execute(code: string): any {
     try {
-        // Use eval to execute the code in a safe context
+        // Use eval to execute the code
         return eval(code);
     } catch (error) {
         handleErrors(error);
@@ -8,6 +8,15 @@ export function execute(code: string): any {
 }
 
 export function handleErrors(error: any): void {
-    console.error("Runtime Error:", error.message);
-    // Additional error handling logic can be added here
+    console.error('Runtime Error:', error.message);
+}
+
+export class Runtime {
+    static print(message: string): void {
+        console.log(message);
+    }
+
+    static error(message: string): void {
+        console.error(message);
+    }
 }
