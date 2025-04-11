@@ -1,0 +1,28 @@
+// filepath: /pronto-lang/pronto-lang/src/examples/calculator.pronto
+fn calculate(a, b, operation) {
+    if (operation == "add") {
+        return a + b;
+    } else if (operation == "subtract") {
+        return a - b;
+    } else if (operation == "multiply") {
+        return a * b;
+    } else if (operation == "divide") {
+        if (b == 0) {
+            return "Error: Division by zero";
+        }
+        return a / b;
+    } else {
+        return "Error: Unknown operation";
+    }
+}
+
+let result = calculate(10, 5, "add");
+print("10 + 5 =", result);
+result = calculate(10, 5, "subtract");
+print("10 - 5 =", result);
+result = calculate(10, 5, "multiply");
+print("10 * 5 =", result);
+result = calculate(10, 5, "divide");
+print("10 / 5 =", result);
+result = calculate(10, 0, "divide");
+print("10 / 0 =", result);

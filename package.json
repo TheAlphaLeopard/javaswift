@@ -1,0 +1,26 @@
+{
+  "name": "pronto-lang",
+  "version": "1.0.0",
+  "description": "Pronto is a fast, simple, and powerful programming language designed for the web, compiling to JavaScript.",
+  "main": "src/compiler/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "programming",
+    "language",
+    "web",
+    "compiler",
+    "typescript"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.0.0",
+    "jest": "^26.0.0",
+    "ts-jest": "^26.0.0"
+  }
+}
