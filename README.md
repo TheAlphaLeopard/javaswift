@@ -1,113 +1,69 @@
-# Pronto Language
+# Javaswift Project
 
-Pronto is a fast, simple, and powerful programming language designed for web development. It combines the best features of JavaScript with a cleaner syntax and performance optimizations, allowing developers to create efficient web applications with ease.
+Javaswift is a new programming language that is a subset/superset of JavaScript, designed to be faster and more efficient. It maintains a similar syntax to JavaScript while using fewer characters and optimized constructs to enhance performance. Javaswift compiles down to standard JavaScript, making it easy to integrate with existing JavaScript projects.
 
-## Key Features
+## Features
 
-- **Simple, Readable Syntax**: Pronto's syntax is designed to be intuitive and easy to understand, making it accessible for beginners and experienced developers alike.
-- **JavaScript Interoperability**: Pronto can seamlessly integrate with existing JavaScript code, allowing developers to leverage their existing knowledge and libraries.
-- **Fast Execution**: The language is optimized for performance, ensuring that applications run quickly and efficiently.
-- **Modern Programming Features**: Pronto includes support for modern programming paradigms, such as asynchronous programming and functional programming.
-- **Built for Web Development**: Pronto is specifically designed for creating web applications, with built-in support for DOM manipulation and web APIs.
+- **Faster Execution**: Javaswift is optimized for speed, allowing for quicker execution of code.
+- **Concise Syntax**: The language uses a more compact syntax, reducing the amount of code needed to achieve the same functionality.
+- **JavaScript Compatibility**: Javaswift compiles to JavaScript, ensuring compatibility with existing JavaScript environments.
+
+## Project Structure
+
+```
+javaswift-project
+├── src
+│   ├── compiler
+│   │   ├── index.ts        # Main compiler class for compiling Javaswift code
+│   │   └── utils.ts        # Utility functions for code transformation and minification
+│   ├── interpreter
+│   │   ├── index.ts        # Main interpreter class for executing compiled JavaScript
+│   │   └── runtime.ts      # Runtime functions for code execution and error handling
+│   ├── language
+│   │   ├── grammar.ts      # Grammar rules for Javaswift
+│   │   └── syntax.ts       # Syntax validation and transformation methods
+│   └── types
+│       └── index.ts        # Interfaces for compiler and interpreter options
+├── package.json             # npm configuration file
+├── tsconfig.json            # TypeScript configuration file
+├── README.md                # Project documentation
+└── .gitignore               # Git ignore file
+```
 
 ## Installation
 
-To get started with Pronto, clone the repository and install the dependencies:
+To get started with Javaswift, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/yourusername/pronto-lang.git
-cd pronto-lang
+git clone <repository-url>
+cd javaswift-project
 npm install
 ```
 
 ## Usage
 
-### Running the Server
+To compile Javaswift code to JavaScript, use the compiler:
 
-To start the Pronto server and run the web-based Pronto Runner:
+```typescript
+import { JavaSwiftCompiler } from './src/compiler/index';
 
-```bash
-npm run start
+const compiler = new JavaSwiftCompiler();
+const jsCode = compiler.compile(javaswiftCode);
 ```
 
-The server will be available at `http://localhost:3000`.
+To run the compiled JavaScript code, use the interpreter:
 
-### Running Pronto Scripts via CLI
+```typescript
+import { JavaSwiftInterpreter } from './src/interpreter/index';
 
-You can run Pronto scripts using the command-line interface:
-
-```bash
-node dist/cli/index.js src/examples/calculator.pronto
-```
-
-### Building the Project
-
-To compile the TypeScript code and prepare the distribution files:
-
-```bash
-npm run build
-```
-
-### Running Tests
-
-To execute the test suite:
-
-```bash
-npm run test
-```
-
-### Cleaning the Build
-
-To remove the `dist` directory:
-
-```bash
-npm run clean
-```
-
-## Examples
-
-### Simple Calculator
-
-```pronto
-fn calculate(a, b, operation) {
-    if (operation == "add") {
-        return a + b;
-    } else if (operation == "subtract") {
-        return a - b;
-    } else if (operation == "multiply") {
-        return a * b;
-    } else if (operation == "divide") {
-        if (b == 0) {
-            return "Error: Division by zero";
-        }
-        return a / b;
-    } else {
-        return "Error: Unknown operation";
-    }
-}
-```
-
-### DOM Manipulation
-
-```pronto
-let button = createElement("button");
-setText(button, "Click me!");
-addClass(button, "btn");
-
-let result = createElement("div");
-addClass(result, "result");
-
-let body = querySelector("body");
-body.appendChild(button);
-body.appendChild(result);
-
-let count = 0;
-on(button, "click", fn() {
-    count++;
-    setText(result, "Button clicked " + count + " times");
-});
+const interpreter = new JavaSwiftInterpreter();
+interpreter.run(jsCode);
 ```
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
