@@ -22,13 +22,47 @@ npm install
 
 ## Usage
 
+### Running the Server
+
+To start the Pronto server and run the web-based Pronto Runner:
+
+```bash
+npm run start
+```
+
+The server will be available at `http://localhost:3000`.
+
+### Running Pronto Scripts via CLI
+
 You can run Pronto scripts using the command-line interface:
 
 ```bash
-npm run pronto yourscript.pronto
+node dist/cli/index.js src/examples/calculator.pronto
 ```
 
-Alternatively, you can use the provided HTML template to run Pronto code directly in the browser.
+### Building the Project
+
+To compile the TypeScript code and prepare the distribution files:
+
+```bash
+npm run build
+```
+
+### Running Tests
+
+To execute the test suite:
+
+```bash
+npm run test
+```
+
+### Cleaning the Build
+
+To remove the `dist` directory:
+
+```bash
+npm run clean
+```
 
 ## Examples
 

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pronto Runner</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/examples/calculator.pronto"></script>
+</head>
+<body>
+    <h1>Pronto Runner</h1>
+    <textarea id="code" rows="10" cols="50" placeholder="Write your Pronto code here..."></textarea>
+    <br>
+    <button id="run">Run</button>
+    <h2>Output:</h2>
+    <pre id="output"></pre>
+
+    <script>
+        const socket = io();
+
+        // Run code from the textarea
+        document.getElementById('run').addEventListener('click', () => {
+            const code = document.getElementById('code').value;
+            socket.emit('runPronto', code);
+        });
+
+        // Display output or errors
+        socket.on('output', (data) => {
+            document.getElementById('output').textContent = data;
+        });
+
+        socket.on('error', (message) => {
+            document.getElementById('output').textContent = `Error: ${message}`;
+        });
+
+        // Load embedded .pronto files
+        const prontoScripts = document.querySelectorAll('script[src$=".pronto"]');
+        prontoScripts.forEach((script) => {
+            const src = script.getAttribute('src');
+            fetch(src)
+                .then((response) => response.text())
+                .then((code) => {
+                    console.log(`Executing embedded Pronto file: ${src}`);
+                    socket.emit('runPronto', code);
+                })
+                .catch((error) => {
+                    console.error(`Failed to load Pronto file: ${src}`, error);
+                });
+        });
+    </script>
+</body>
+</html>
