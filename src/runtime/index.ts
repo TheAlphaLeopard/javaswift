@@ -1,31 +1,32 @@
-// filepath: /pronto-lang/pronto-lang/src/runtime/index.ts
-class Runtime {
+export class Runtime {
+    context: Record<string, any>;
+
     constructor() {
         this.context = {};
     }
 
-    execute(code) {
+    execute(code: string) {
         try {
-            // Placeholder for execution logic
-            console.log("Executing code:", code);
-            // Here you would implement the logic to interpret or run the Pronto code
+            eval(code);
         } catch (error) {
-            this.handleError(error);
+            this.handleError(error as Error); // Cast error to Error type
         }
     }
 
-    handleError(error) {
-        console.error("Runtime Error:", error.message);
+    handleError(error: Error) {
+        console.error(`Runtime Error: ${error.message}`);
     }
 
-    setContext(key, value) {
+    setContext(key: string, value: any) {
         this.context[key] = value;
     }
 
-    getContext(key) {
+    getContext(key: string) {
         return this.context[key];
     }
 }
 
-const runtime = new Runtime();
-export default runtime;
+export const execute = (code: string) => {
+    const runtime = new Runtime();
+    runtime.execute(code);
+};

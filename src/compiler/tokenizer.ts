@@ -1,92 +1,83 @@
 // filepath: /pronto-lang/pronto-lang/src/compiler/tokenizer.ts
-class Token {
-    constructor(public type: string, public value: string) {}
+export interface Token {
+    type: string;
+    value: string;
 }
 
-class Tokenizer {
-    private current: string;
-    private position: number;
+const keywords = ['let', 'const', 'fn', 'if', 'else', 'while', 'for', 'print'];
 
-    constructor(private input: string) {
-        this.current = input;
-        this.position = 0;
-    }
+export const tokenize = (input: string): Token[] => {
+    const tokens: Token[] = [];
+    let current = 0;
 
-    private isWhitespace(char: string): boolean {
-        return /\s/.test(char);
-    }
+    while (current < input.length) {
+        let char = input[current];
 
-    private isDigit(char: string): boolean {
-        return /\d/.test(char);
-    }
-
-    private isAlpha(char: string): boolean {
-        return /[a-zA-Z_]/.test(char);
-    }
-
-    private readWhile(predicate: (char: string) => boolean): string {
-        let result = '';
-        while (this.position < this.current.length && predicate(this.current[this.position])) {
-            result += this.current[this.position++];
-        }
-        return result;
-    }
-
-    private readNextToken(): Token | null {
-        while (this.position < this.current.length) {
-            const char = this.current[this.position];
-
-            if (this.isWhitespace(char)) {
-                this.position++;
-                continue;
-            }
-
-            if (this.isDigit(char)) {
-                return new Token('NUMBER', this.readWhile(this.isDigit));
-            }
-
-            if (this.isAlpha(char)) {
-                return new Token('IDENTIFIER', this.readWhile(this.isAlpha));
-            }
-
-            switch (char) {
-                case '+':
-                    this.position++;
-                    return new Token('PLUS', '+');
-                case '-':
-                    this.position++;
-                    return new Token('MINUS', '-');
-                case '*':
-                    this.position++;
-                    return new Token('STAR', '*');
-                case '/':
-                    this.position++;
-                    return new Token('SLASH', '/');
-                case '=':
-                    this.position++;
-                    return new Token('EQUAL', '=');
-                case ';':
-                    this.position++;
-                    return new Token('SEMICOLON', ';');
-                default:
-                    throw new Error(`Unexpected character: ${char}`);
-            }
+        // Skip whitespace
+        if (/\s/.test(char)) {
+            current++;
+            continue;
         }
 
-        return null; // End of input
-    }
-
-    public tokenize(): Token[] {
-        const tokens: Token[] = [];
-        let token: Token | null;
-
-        while ((token = this.readNextToken()) !== null) {
-            tokens.push(token);
+        // Handle numbers
+        if (/\d/.test(char)) {
+            let value = '';
+            while (/\d/.test(char)) {
+                value += char;
+                char = input[++current];
+            }
+            tokens.push({ type: 'NUMBER', value });
+            continue;
         }
 
-        return tokens;
-    }
-}
+        // Handle strings
+        if (char === '"' || char === "'") {
+            let value = '';
+            const quoteType = char;
+            char = input[++current];
+            while (char !== quoteType) {
+                value += char;
+                char = input[++current];
+            }
+            current++; // Skip closing quote
+            tokens.push({ type: 'STRING', value });
+            continue;
+        }
 
-// Export the Tokenizer class for use in other modules
-export { Tokenizer, Token };
+        // Handle identifiers and keywords
+        if (/[a-zA-Z_]/.test(char)) {
+            let value = '';
+            while (/[a-zA-Z0-9_]/.test(char)) {
+                value += char;
+                char = input[++current];
+            }
+            const type = keywords.includes(value) ? value.toUpperCase() : 'IDENTIFIER';
+            tokens.push({ type, value });
+            continue;
+        }
+
+        // Handle operators and punctuation
+        const singleCharTokens: { [key: string]: string } = {
+            '=': 'ASSIGN',
+            ';': 'SEMICOLON',
+            '(': 'LEFT_PAREN',
+            ')': 'RIGHT_PAREN',
+            '{': 'LEFT_BRACE',
+            '}': 'RIGHT_BRACE',
+            '+': 'PLUS',
+            '-': 'MINUS',
+            '*': 'STAR',
+            '/': 'SLASH',
+        };
+
+        if (singleCharTokens[char]) {
+            tokens.push({ type: singleCharTokens[char], value: char });
+            current++;
+            continue;
+        }
+
+        throw new Error(`Unexpected character: ${char}`);
+    }
+
+    return tokens;
+};

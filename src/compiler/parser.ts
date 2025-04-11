@@ -1,55 +1,59 @@
-// filepath: /pronto-lang/pronto-lang/src/compiler/parser.ts
-class Parser {
-    constructor(tokens) {
+export interface ASTNode {
+    type: string;
+    [key: string]: any;
+}
+
+export class Parser {
+    tokens: any[];
+    current: number;
+
+    constructor(tokens: any[]) {
         this.tokens = tokens;
         this.current = 0;
     }
 
-    parse() {
-        const statements = [];
+    parse(): ASTNode[] {
+        const statements: ASTNode[] = [];
         while (!this.isAtEnd()) {
             statements.push(this.statement());
         }
         return statements;
     }
 
-    statement() {
+    statement(): ASTNode {
         if (this.match('PRINT')) {
             return this.printStatement();
         }
-        // Add more statement types as needed
         return this.expressionStatement();
     }
 
-    printStatement() {
+    printStatement(): ASTNode {
         const value = this.expression();
-        this.consume(';', "Expect ';' after value.");
+        this.consume('SEMICOLON', "Expect ';' after value.");
         return { type: 'PrintStatement', value };
     }
 
-    expressionStatement() {
+    expressionStatement(): ASTNode {
         const expr = this.expression();
-        this.consume(';', "Expect ';' after expression.");
+        this.consume('SEMICOLON', "Expect ';' after expression.");
         return { type: 'ExpressionStatement', expression: expr };
     }
 
-    expression() {
-        // Implement expression parsing logic here
+    expression(): ASTNode {
         return this.primary();
     }
 
-    primary() {
+    primary(): ASTNode {
         if (this.match('NUMBER')) {
             return { type: 'Literal', value: this.previous().value };
         }
         if (this.match('STRING')) {
             return { type: 'Literal', value: this.previous().value };
         }
-        // Handle other primary expressions
         throw new Error("Unexpected token.");
     }
 
-    match(...types) {
+    match(...types: string[]): boolean {
         for (const type of types) {
             if (this.check(type)) {
                 this.advance();
@@ -59,32 +63,37 @@ class Parser {
         return false;
     }
 
-    check(type) {
+    check(type: string): boolean {
         if (this.isAtEnd()) return false;
         return this.peek().type === type;
     }
 
-    advance() {
+    advance(): any {
         if (!this.isAtEnd()) this.current++;
         return this.previous();
     }
 
-    isAtEnd() {
-        return this.peek().type === 'EOF';
+    isAtEnd(): boolean {
+        return this.current >= this.tokens.length;
     }
 
-    peek() {
+    peek(): any {
         return this.tokens[this.current];
     }
 
-    previous() {
+    previous(): any {
         return this.tokens[this.current - 1];
     }
 
-    consume(type, message) {
+    consume(type: string, message: string): any {
         if (this.check(type)) return this.advance();
         throw new Error(message);
     }
 }
+
+export const parse = (tokens: any[]): ASTNode[] => {
+    const parser = new Parser(tokens);
+    return parser.parse();
+};
 
 export default Parser;
